@@ -3,7 +3,7 @@ class BaseModel:
     clase base para agrupar modelos
     """
 
-    # entrenar
+    # entrenar modelo
     def train(self, data):
         raise NotImplementedError("El método 'train' debe ser implementado por la subclase")
     
