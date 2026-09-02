@@ -6,5 +6,5 @@ class LinearModel(BaseModel):
         print("Entrenando el modelo lineal con los datos:", data)
 
     def predict(self, data):
-        print("Prediciendo con el modelo lineal usando los datos:", data)
+        print("Prediciendo con el 88 modelo lineal usando los datos:", data)
         return [x * 0.5 for x in data]
