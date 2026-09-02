@@ -1,43 +1,35 @@
-def mostrar_menu():
-    print("\n=== Programa de ejemplo ===")
-    print("1. Saludar")
-    print("2. Calcular promedio")
-    print("3. Salir")
+from models.model_factory import ModelFactory
 
+def main():
 
-def saludar():
-    nombre = input("¿Cómo te llamas? ")
-    print(f"¡Hola, {nombre}! Bienvenido(a) al programa.")
+    """
+    ejecuta el flujo principal de analisis de datos
+    permitiendo seleccionar el modelo desde consola
+    """
 
+    print("=== seleccione modelo===")
+    print("Opciones:")
+    print("1. Modelo Lineal")
+    print("2. Modelo de Árbol")
 
-def calcular_promedio():
+    model_type = input("Ingrese el número del modelo que desea usar: ").strip().lower()
+
     try:
-        cantidad = int(input("¿Cuántas notas deseas ingresar? "))
-        if cantidad <= 0:
-            print("La cantidad debe ser mayor que cero.")
-            return
+        #crear el modelo usando factory
+        model = ModelFactory.create_model(model_type)
+    except ValueError as e:
+        print(e)
+        return 
+    
+    data = [10, 20, 30, 40]
 
-        notas = []
-        for i in range(1, cantidad + 1):
-            nota = float(input(f"Ingresa la nota {i}: "))
-            notas.append(nota)
+    print("\n=== Entrenando el modelo ===")
+    model.train(data)
 
-        promedio = sum(notas) / len(notas)
-        print(f"El promedio es: {promedio:.2f}")
-    except ValueError:
-        print("Debes ingresar números válidos.")
+    print("\n=== Generando predicciones ===")
+    predictions = model.predict(data)
 
+    print("\nPredicciones:", predictions)
 
-while True:
-    mostrar_menu()
-    opcion = input("Elige una opción: ")
-
-    if opcion == "1":
-        saludar()
-    elif opcion == "2":
-        calcular_promedio()
-    elif opcion == "3":
-        print("Hasta luego.")
-        break
-    else:
-        print("Opción no válida. Intenta de nuevo.")
+if __name__ == "__main__":
+    main()
