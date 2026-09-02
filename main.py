@@ -15,7 +15,7 @@ def main():
     model_type = input("Ingrese el número del modelo que desea usar: ").strip().lower()
 
     try:
-        #crear el modelo usando factory
+        #crear el modelo usando el patron factory
         model = ModelFactory.create_model(model_type)
     except ValueError as e:
         print(e)
