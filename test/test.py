@@ -8,6 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from models.base_model import BaseModel
 from models.linear_model import LinearModel
 from models.tree_model import TreeModel
+from models.average_model import AverageModel
 from models.model_factory import ModelFactory
 
 
@@ -45,17 +46,41 @@ class TestTreeModel(unittest.TestCase):
     def test_train_does_not_fail(self):
         self.model.train(self.data)
 
+class TestAverageModel(unittest.TestCase):
+
+    def setUp(self):
+        self.model = AverageModel()
+        self.data = [10, 20, 30, 40]
+
+    def test_predict_returns_average(self):
+        self.model.train(self.data)
+
+        self.assertEqual(
+            self.model.predict(self.data),
+            [25.0, 25.0, 25.0, 25.0]
+        )
+
+    def test_train_with_empty_data_raises_error(self):
+        with self.assertRaises(ValueError):
+            self.model.train([])
 
 class TestModelFactory(unittest.TestCase):
+
     def test_create_linear_model(self):
         self.assertIsInstance(ModelFactory.create_model("1"), LinearModel)
 
     def test_create_tree_model(self):
         self.assertIsInstance(ModelFactory.create_model("2"), TreeModel)
 
+    def test_create_average_model(self):
+        self.assertIsInstance(
+            ModelFactory.create_model("3"),
+            AverageModel
+        )
+
     def test_create_model_with_unknown_type(self):
         with self.assertRaises(ValueError):
-            ModelFactory.create_model("3")
+            ModelFactory.create_model("4")
 
 
 if __name__ == "__main__":
